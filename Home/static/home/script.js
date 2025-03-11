@@ -1,3 +1,5 @@
+const staticUrl = document.body.getAttribute("data-static-url");
+
 
 const productGrid = document.getElementById('productGrid');
 const farmerGrid = document.getElementById('farmerGrid');
@@ -18,7 +20,7 @@ const products = [
         price: 40,
         quantity: 100,
         unit: "kg",
-        image: "images/tomatoes.jpg"
+        image: staticUrl+"images/tomatoes.jpg"
     },
     {
         id: 2,
@@ -27,7 +29,7 @@ const products = [
         price: 50,
         quantity: 80,
         unit: "kg",
-        image: "images/carrot.jpg"
+        image: staticUrl+"images/carrot.jpg"
     },
     {
         id: 3,
@@ -36,7 +38,7 @@ const products = [
         price: 30,
         quantity: 120,
         unit: "kg",
-        image: "images/potatoes.jpg"
+        image: staticUrl+"images/potatoes.jpg"
     },
     {
         id: 4,
@@ -45,7 +47,7 @@ const products = [
         price: 35,
         quantity: 90,
         unit: "kg",
-        image: "images/onion.jpg"
+        image: staticUrl+"images/onion.jpg"
     },
     {
         id: 5,
@@ -54,7 +56,7 @@ const products = [
         price: 20,
         quantity: 60,
         unit: "kg",
-        image: "images/spinach.jpg"
+        image: staticUrl+"images/spinach.jpg"
     },
     {
         id: 6,
@@ -63,7 +65,7 @@ const products = [
         price: 25,
         quantity: 70,
         unit: "kg",
-        image: "images/cauliflower.jpg"
+        image: staticUrl+"images/cauliflower.jpg"
     },
     {
         id: 7,
@@ -72,7 +74,7 @@ const products = [
         price: 45,
         quantity: 50,
         unit: "kg",
-        image: "images/brinjal.jpg"
+        image: staticUrl+"images/brinjal.jpg"
     },
     {
         id: 8,
@@ -81,7 +83,7 @@ const products = [
         price: 15,
         quantity: 100,
         unit: "kg",
-        image: "images/cucumber.jpg"
+        image: staticUrl+"images/cucumber.jpg"
     }
 ];
 
@@ -90,25 +92,25 @@ const farmers = [
         id: 1,
         name: "Ramesh Patel",
         location: "Gujarat",
-        image: "images/farmer1.jpg"
+        image: staticUrl+"images/farmer1.jpg"
     },
     {
         id: 2,
         name: "Manoj Sharma",
         location: "Uttar Pradesh",
-        image: "images/farmer5.jpg"
+        image: staticUrl+"images/farmer5.jpg"
     },
     {
         id: 3,
         name: "Rajesh Kumar",
         location: "Punjab",
-        image: "images/farmer3.jpg"
+        image: staticUrl+"images/farmer3.jpg"
     },
     {
         id: 4,
         name: "Anita Singh",
         location: "Maharashtra",
-        image: "images/farmer4.jpg"
+        image: staticUrl+"images/farmer4.jpg"
     }
 ];
 
@@ -116,7 +118,7 @@ const farmers = [
 function renderProducts() {
     productGrid.innerHTML = products.map(product => `
         <div class="product-card">
-            <img src="${product.image}" alt="${product.name}" onerror="this.src='images/default.jpg';">
+            <img src="${product.image}" alt="${product.name}" onerror="this.src='{% static 'home/images/potatoes.jpg'%}';">
             <div class="product-info">
                 <h3>${product.name}</h3>
                 <p>${product.description}</p>
@@ -131,7 +133,7 @@ function renderProducts() {
 function renderFarmers() {
     farmerGrid.innerHTML = farmers.map(farmer => `
         <div class="farmer-card">
-            <img src="${farmer.image}" alt="${farmer.name}" onerror="this.src='images/default.jpg';">
+            <img src="${farmer.image}" alt="${farmer.name}" onerror="this.src='{% static 'home/images/potatoes.jpg'%}';">
             <div class="farmer-info">
                 <h3>${farmer.name}</h3>
                 <p>${farmer.location}</p>
