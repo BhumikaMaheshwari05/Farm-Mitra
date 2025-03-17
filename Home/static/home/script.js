@@ -209,19 +209,19 @@ productForm.addEventListener('submit', (e) => {
 });
 
 //Login Form 
-loginForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
+// loginForm.addEventListener('submit', (event) => {
+//     event.preventDefault();
+//     const username = document.getElementById('username').value;
+//     const password = document.getElementById('password').value;
 
-    // Simulate login logic (replace with actual authentication)
-    if (username === 'user' && password === 'password') {
-        alert('Login successful!');
-        loginModal.style.display = 'none';
-    } else {
-        alert('Invalid username or password');
-    }
-});
+//     // Simulate login logic (replace with actual authentication)
+//     if (username === 'user' && password === 'password') {
+//         alert('Login successful!');
+//         loginModal.style.display = 'none';
+//     } else {
+//         alert('Invalid username or password');
+//     }
+// });
 
 // Register Form
 registerForm.addEventListener('submit', (event) => {
