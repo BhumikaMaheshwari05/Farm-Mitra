@@ -72,6 +72,14 @@ TEMPLATES = [
 WSGI_APPLICATION = "FarmMitra.wsgi.application"
 
 
+AUTHENTICATION_BACKENDS = [
+    'User.backends.Auth_Backend',  # Custom backend (checked first)
+    'django.contrib.auth.backends.ModelBackend',  # Default backend (checked next)
+]
+
+
+
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
@@ -123,3 +131,5 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+AUTH_USER_MODEL = "User.CustomUser"  # AppName.ModelName

@@ -224,16 +224,16 @@ productForm.addEventListener('submit', (e) => {
 // });
 
 // Register Form
-registerForm.addEventListener('submit', (event) => {
-    event.preventDefault();
-    const username = document.getElementById('regUsername').value;
-    const password = document.getElementById('regPassword').value;
-    const role = document.getElementById('role').value;
+// registerForm.addEventListener('submit', (event) => {
+//     event.preventDefault();
+//     const username = document.getElementById('regUsername').value;
+//     const password = document.getElementById('regPassword').value;
+//     const role = document.getElementById('role').value;
 
-    // Simulate registration logic (replace with actual backend integration)
-    alert(`Registration successful! Welcome, ${username} (${role}).`);
-    registerModal.style.display = 'none';
-});
+//     // Simulate registration logic (replace with actual backend integration)
+//     alert(`Registration successful! Welcome, ${username} (${role}).`);
+//     registerModal.style.display = 'none';
+// });
 
 renderProducts();
 renderFarmers();

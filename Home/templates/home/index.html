@@ -9,6 +9,37 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body data-static-url="{% static 'home/' %}">
+    {% if messages %}
+                <div class="messages-container">
+                    {% for message in messages %}
+                        {% if message.tags == 'error' %}
+                            <div class="custom-alert alert alert-danger alert-dismissible fade show" role="alert">
+                                <span class="alert-icon">❌</span>
+                                <span class="alert-message" style="color: red;">{{ message }}</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% elif message.tags == 'success' %}
+                            <div class="custom-alert alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-icon">✅</span>
+                                <span class="alert-message" style="color: green;">{{ message }}</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% elif message.tags == 'warning' %}
+                            <div class="custom-alert alert alert-warning alert-dismissible fade show" role="alert">
+                                <span class="alert-icon">⚠️</span>
+                                <span class="alert-message" style="color: blue;">{{ message }}</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% elif message.tags == 'info' %}
+                            <div class="custom-alert alert alert-info alert-dismissible fade show" role="alert">
+                                <span class="alert-icon">ℹ️</span>
+                                <span class="alert-message">{{ message }}</span>
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            {% endif %}
     <nav class="navbar">
         <div class="container">
             <img src="{% static 'home/images/logo.png' %}" alt="Farm2Market Logo" class="logo">
@@ -19,6 +50,9 @@
                 <a href="#about">About</a>
                 <a href="#dashboard">Dashboard</a>
             </div>
+            
+
+
             {% if user.is_authenticated %}
                 <div class="nav-buttons">
                    <a href="{% url 'logout' %}"><button  class="btn btn-outline">Logout</button></a> 
@@ -113,7 +147,7 @@
             <p>&copy; 2025 Farm Mitra. All rights reserved.</p>
         </div>
     </footer>
-
+   
     <div id="loginModal" class="modal">
         <div class="modal-content">
             <span class="close">&times;</span>
@@ -139,19 +173,19 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <h2>Register</h2>
-            <form id="registerForm">
+            <form id="registerForm" method="POST" action="{%url 'register'%}">
                 {% csrf_token %}
                 <div class="form-group">
                     <label for="regUsername">Username</label>
-                    <input type="text" id="regUsername" required>
+                    <input type="text" id="regUsername" name="username"  required>
                 </div>
                 <div class="form-group">
                     <label for="regPassword">Password</label>
-                    <input type="password" id="regPassword" required>
+                    <input type="password" id="regPassword" name="password" required>
                 </div>
                 <div class="form-group">
                     <label for="role">I am a</label>
-                    <select id="role" required>
+                    <select id="role"  name="role" required>
                         <option value="farmer">Farmer</option>
                         <option value="buyer">Buyer</option>
                     </select>
