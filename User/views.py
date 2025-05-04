@@ -14,7 +14,7 @@ def loginview(request):
         role=request.POST.get("role")
         if not username or not password:  # Check if either field is missing
             messages.error(request, "Please enter both username and password")
-            return redirect("login")
+            return render(request, "home/index.html", {"show_login_modal": True})
         user=authenticate(request,username=username,password=password)
         if(user):
             login(request,user)
@@ -24,7 +24,7 @@ def loginview(request):
             return redirect("homepage")
         else:
             messages.error(request,"Baby check the credentials")
-    return redirect("homepage")
+    return render(request, "home/index.html", {"show_login_modal": True})
 
 def registerview(request):
     if(request.method=="POST"):

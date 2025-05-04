@@ -1,71 +1,5 @@
-{% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Farm Mitra - Fresh Produce Direct from Farmers</title>
-    <link rel="stylesheet" href="{% static 'home/style.css' %}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-</head>
-<body data-static-url="{% static 'home/' %}">
-    {% if messages %}
-                <div class="messages-container">
-                    {% for message in messages %}
-                        {% if message.tags == 'error' %}
-                            <div class="custom-alert alert alert-danger alert-dismissible fade show" role="alert">
-                                <span class="alert-icon">❌</span>
-                                <span class="alert-message" style="color: red;">{{ message }}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% elif message.tags == 'success' %}
-                            <div class="custom-alert alert alert-success alert-dismissible fade show" role="alert">
-                                <span class="alert-icon">✅</span>
-                                <span class="alert-message" style="color: green;">{{ message }}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% elif message.tags == 'warning' %}
-                            <div class="custom-alert alert alert-warning alert-dismissible fade show" role="alert">
-                                <span class="alert-icon">⚠️</span>
-                                <span class="alert-message" style="color: blue;">{{ message }}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% elif message.tags == 'info' %}
-                            <div class="custom-alert alert alert-info alert-dismissible fade show" role="alert">
-                                <span class="alert-icon">ℹ️</span>
-                                <span class="alert-message">{{ message }}</span>
-                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                            </div>
-                        {% endif %}
-                    {% endfor %}
-                </div>
-            {% endif %}
-    <nav class="navbar">
-        <div class="container">
-            <img src="{% static 'home/images/logo.png' %}" alt="Farm2Market Logo" class="logo">
-            <div class="nav-links">
-                <a href="#home">Home</a>
-                <a href="#products">Products</a>
-                <a href="#farmers">Farmers</a>
-                <a href="#about">About</a>
-                <a href="#dashboard">Dashboard</a>
-            </div>
-            
-
-
-            {% if user.is_authenticated %}
-                <div class="nav-buttons">
-                   <a href="{% url 'logout' %}"><button  class="btn btn-outline">Logout</button></a> 
-                </div>
-            {%else%}
-            <div class="nav-buttons">
-                <button id="loginBtn" class="btn btn-outline">Login</button>
-                <button id="registerBtn" class="btn btn-primary">Register</button>
-            </div>
-            {%endif%}
-        </div>
-    </nav>
-
+{% extends 'home/base.html' %}
+{% block content %}
     <section id="home" class="homee">
         <div class="container">
             <h1>Fresh Produce, Direct from Farmers</h1>
@@ -79,7 +13,22 @@
     <section id="products" class="products">
         <div class="container">
             <h2>Featured Products</h2>
-            <div id="productGrid" class="product-grid"></div>
+            <div id="productGrid" class="product-grid">
+                {% for product in products %}
+                    <div class="product-card" style="display: flex">
+                        <div class="product-info">
+                            <h3>{{product.Product_Name}}</h3>
+                            <p>{{product.Description}}</p>
+                            <div class="product-price">₹{{product.Price}} / {{product.Unit}}</div>
+                            <p>Available: {{product.Quantity}} {{product.Unit}}</p>
+                            <img src="{{ product.Image_URL.url }}" alt="{{ prod.Product_Name }}" class="product-image">
+                        </div>
+                        
+                    </div>
+                {% endfor %}
+            </div>
+
+
         </div>
     </section>
 
@@ -107,7 +56,7 @@
             </div>
             <div id="addProductForm" class="add-product-form" style="display: none;">
                 <h3>Add New Product</h3>
-                <form id="productForm">
+                <form id="productForm" method="post" action="">
                     <div class="form-group">
                         <label for="productName">Product Name</label>
                         <input type="text" id="productName" required>
@@ -130,72 +79,4 @@
         </div>
     </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-links">
-                <a href="#home">Home</a>
-                <a href="#products">Products</a>
-                <a href="#farmers">Farmers</a>
-                <a href="#about">About</a>
-                <a href="#dashboard">Dashboard</a>
-            </div>
-            <div class="social-media">
-                <a href="#"><i class="fab fa-facebook"></i></a>
-                <a href="#"><i class="fab fa-twitter"></i></a>
-                <a href="#"><i class="fab fa-instagram"></i></a>
-            </div>
-            <p>&copy; 2025 Farm Mitra. All rights reserved.</p>
-        </div>
-    </footer>
-   
-    <div id="loginModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Login</h2>
-            <form id="loginForm" method="POST" action="{% url 'login' %}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" required>
-                </div>
-                <div class="form-group">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" required>
-                </div>
-                <button type="submit" class="btn btn-primary">Login</button>
-            </form>
-            
-            
-        </div>
-    </div>
-
-    <div id="registerModal" class="modal">
-        <div class="modal-content">
-            <span class="close">&times;</span>
-            <h2>Register</h2>
-            <form id="registerForm" method="POST" action="{%url 'register'%}">
-                {% csrf_token %}
-                <div class="form-group">
-                    <label for="regUsername">Username</label>
-                    <input type="text" id="regUsername" name="username"  required>
-                </div>
-                <div class="form-group">
-                    <label for="regPassword">Password</label>
-                    <input type="password" id="regPassword" name="password" required>
-                </div>
-                <div class="form-group">
-                    <label for="role">I am a</label>
-                    <select id="role"  name="role" required>
-                        <option value="farmer">Farmer</option>
-                        <option value="buyer">Buyer</option>
-                    </select>
-                </div>
-                <button type="submit" class="btn btn-primary">Register</button>
-            </form>
-        </div>
-    </div>
-
-
-    <script src="{% static 'home/script.js' %}"></script>
-</body>
-</html>
+{% endblock %}

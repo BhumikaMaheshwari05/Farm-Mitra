@@ -1,11 +1,27 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    Dashboard For Farmers!!!!!!!.... 
-</body>
-</html>
+{% extends 'home/base.html' %}
+{% block content %}
+    <h1>Your Listed Products</h1>
+    <ul class="product-list">
+        {% for prod in products %}
+            <li class="product-card horizontal">
+                <img src="{{ prod.Image_URL.url }}" alt="{{ prod.Product_Name }}" class="product-image small">
+
+                <div class="product-details-wrapper">
+                    <h4 class="product-name">{{ prod.Product_Name }}</h4>
+                    <p class="product-description">{{ prod.Description }}</p>
+                    <p class="product-price">Price: <span class="price">₹{{ prod.Price }}</span> / {{ prod.unit }}</p>
+                    <p class="product-quantity">Available: {{ prod.Quantity }} {{ prod.unit }}</p>
+                </div>
+
+                <div class="product-actions">
+                    <a href="" class="btn btn-edit">Edit</a>
+                    <a href="" class="btn btn-remove">Remove</a>
+                </div>
+            </li>
+        {% empty %}
+            <li>No products available.</li>
+        {% endfor %}
+    </ul>
+
+
+{% endblock %}
